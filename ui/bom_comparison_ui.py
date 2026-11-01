@@ -142,15 +142,24 @@ def _render_upload_bar() -> None:
             disabled=not both_uploaded,
             key="run_btn",
         )
-        if not both_uploaded:
-            st.caption("Upload both BOM files to enable")
-        else:
+        if both_uploaded or old_file is not None or new_file is not None:
             if st.button("Clear Files", use_container_width=True, key="clear_files_btn"):
                 for key in ["comparison_results", "comparison_error", "comparison_traceback",
                             "old_bom_upload", "new_bom_upload"]:
                     st.session_state.pop(key, None)
                 st.rerun()
+    # ── Upload Readiness Progress Indicator ──
+    uploaded_count = (1 if old_file is not None else 0) + (1 if new_file is not None else 0)
+    pct = uploaded_count * 50
+    if uploaded_count == 0:
+        bar_text = "Upload Readiness: 0 of 2 files uploaded (0%) • Select both BOM files to begin"
+    elif uploaded_count == 1:
+        ready_label = "Old BOM ready, waiting for New BOM..." if old_file is not None else "New BOM ready, waiting for Old BOM..."
+        bar_text = f"Upload Readiness: 1 of 2 files ready (50%) • {ready_label}"
+    else:
+        bar_text = "Upload Readiness: Both BOM files ready (100%) • Ready to compare!"
 
+    st.progress(pct, text=bar_text)
     st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
 
     if run_clicked and both_uploaded:
@@ -407,29 +416,30 @@ def _cached_load_bom(file_bytes: bytes, file_name: str) -> dict:
 # ── Comparison Runner ─────────────────────────────────────────────────────────
 def _run_comparison(old_file, new_file) -> None:
     try:
-        with st.spinner("Parsing Old BOM..."):
-            old_file.seek(0)
-            old_data = old_file.read()
-            old_result = _cached_load_bom(old_data, getattr(old_file, "name", "old_bom"))
+        prog_bar = st.progress(10, text="[1/4] Reading and validating Baseline BOM (Old)...")
+        old_file.seek(0)
+        old_data = old_file.read()
+        old_result = _cached_load_bom(old_data, getattr(old_file, "name", "old_bom"))
 
-        with st.spinner("Parsing New BOM..."):
-            new_file.seek(0)
-            new_data = new_file.read()
-            new_result = _cached_load_bom(new_data, getattr(new_file, "name", "new_bom"))
+        prog_bar.progress(35, text="[2/4] Reading and validating Revised BOM (New)...")
+        new_file.seek(0)
+        new_data = new_file.read()
+        new_result = _cached_load_bom(new_data, getattr(new_file, "name", "new_bom"))
 
+        prog_bar.progress(65, text="[3/4] Evaluating Part Records & Detecting Attribute Deltas...")
         columns_to_compare = CORE_TRACKED_COLUMNS
+        results = compare(old_result["df"], new_result["df"], columns_to_compare)
 
-        with st.spinner("Running Comparison Engine..."):
-            results = compare(old_result["df"], new_result["df"], columns_to_compare)
+        prog_bar.progress(90, text="[4/4] Generating Executive Excel Diff Report...")
+        export_bytes = export_to_excel(
+            std_rows     = results["standard"],
+            nonstd_rows  = results["non_standard"],
+            summary      = results["summary"],
+            old_filename = old_file.name,
+            new_filename = new_file.name,
+        )
 
-        with st.spinner("Building Executive Excel Report..."):
-            export_bytes = export_to_excel(
-                std_rows     = results["standard"],
-                nonstd_rows  = results["non_standard"],
-                summary      = results["summary"],
-                old_filename = old_file.name,
-                new_filename = new_file.name,
-            )
+        prog_bar.progress(100, text="Comparison completed successfully! Loading dashboard...")
 
         results["old_filename"] = old_file.name
         results["new_filename"] = new_file.name
