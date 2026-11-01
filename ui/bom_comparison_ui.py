@@ -377,24 +377,21 @@ def _render_table(rows: list[dict], partition: str) -> None:
     )
 
 
-@st.cache_data(show_spinner=False)
-def _cached_load_bom(file_bytes: bytes, file_name: str) -> dict:
-    """Cache parsed BOM structure by raw bytes to avoid re-parsing on reruns."""
-    return load_bom(io.BytesIO(file_bytes))
-
-
 # ── Comparison Runner ─────────────────────────────────────────────────────────
 def _run_comparison(old_file, new_file) -> None:
     try:
+        # Clear any leftover Streamlit cache to prevent stale data desync
+        st.cache_data.clear()
+
         prog_bar = st.progress(10, text="[1/4] Reading and validating Baseline BOM (Old)...")
         old_file.seek(0)
         old_data = old_file.read()
-        old_result = _cached_load_bom(old_data, getattr(old_file, "name", "old_bom"))
+        old_result = load_bom(io.BytesIO(old_data))
 
         prog_bar.progress(35, text="[2/4] Reading and validating Revised BOM (New)...")
         new_file.seek(0)
         new_data = new_file.read()
-        new_result = _cached_load_bom(new_data, getattr(new_file, "name", "new_bom"))
+        new_result = load_bom(io.BytesIO(new_data))
 
         prog_bar.progress(65, text="[3/4] Evaluating Part Records & Detecting Attribute Deltas Across All Columns...")
         df_cols = set(old_result["df"].columns) | set(new_result["df"].columns)
