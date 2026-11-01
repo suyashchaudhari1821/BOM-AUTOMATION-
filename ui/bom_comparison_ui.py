@@ -200,7 +200,7 @@ def _render_results(results: dict) -> None:
     with dl_col:
         if export_bytes:
             st.download_button(
-                label="Download Executive Excel Report",
+                label="Download the comparison report",
                 data=export_bytes,
                 file_name="Expleo_BOM_Comparison_Report.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
