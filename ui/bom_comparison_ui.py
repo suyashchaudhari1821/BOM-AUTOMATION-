@@ -396,8 +396,11 @@ def _run_comparison(old_file, new_file) -> None:
         new_data = new_file.read()
         new_result = _cached_load_bom(new_data, getattr(new_file, "name", "new_bom"))
 
-        prog_bar.progress(65, text="[3/4] Evaluating Part Records & Detecting Attribute Deltas...")
-        columns_to_compare = CORE_TRACKED_COLUMNS
+        prog_bar.progress(65, text="[3/4] Evaluating Part Records & Detecting Attribute Deltas Across All Columns...")
+        df_cols = set(old_result["df"].columns) | set(new_result["df"].columns)
+        columns_to_compare = [item for item in CORE_TRACKED_COLUMNS if item[0] in df_cols and item[0] != "REPERE"]
+        if not columns_to_compare:
+            columns_to_compare = CORE_TRACKED_COLUMNS
         results = compare(old_result["df"], new_result["df"], columns_to_compare)
 
         prog_bar.progress(90, text="[4/4] Generating Executive Excel Diff Report...")

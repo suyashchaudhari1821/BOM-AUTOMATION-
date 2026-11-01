@@ -31,54 +31,74 @@ COLUMN_ALIASES: dict[str, list[str]] = {
     "MASSE":        ["MASSE", "weight", "Weight", "Masse"],
     "CATEGORIE":    ["CATEGORIE", "Category", "Cat", "Categorie"],
     "FIXATION":     ["FIXATION", "Fixation", "Fastening"],
+    "COMMANDE":     ["COMMANDE", "Commande", "Order", "Order Code"],
     "Source Base":  ["Source Base", "source base", "Base Source"],
     "PR Specifique":["PR Specifique", "PR Spec", "Specific PR"],
+    "TRAITEMENT":   ["TRAITEMENT", "Traitement", "Treatment", "Heat Treatment"],
+    "FOURNISSEUR":  ["FOURNISSEUR", "Fournisseur", "Supplier", "Vendor"],
+    "CODE":         ["CODE", "Code"],
+    "NORME":        ["N° NORME", "N°NORME", "NORME", "Norme", "Standard Norm", "Standard No"],
 }
 
-# ── Core Tracked Columns (default selection, pre-checked in UI) ────────────────
+# ── Core Tracked Columns ───────────────────────────────────────────────────────
 # Tuple: (internal_key, english_display_name, french_display_name)
 CORE_TRACKED_COLUMNS: list[tuple[str, str, str]] = [
+    ("NOPLAN",       "Drawing No.",               "No. Plan"),
+    ("NOPLANCHE",    "Sheet / Page No.",          "No. Planche"),
+    ("DESIGN",       "French Description",        "Designation francaise"),
+    ("DESIGN EN",    "English Description",       "Designation anglaise"),
+    ("CONSTRUCTEUR", "Manufacturer",              "Constructeur"),
+    ("REFCONST",     "Manufacturer Part Number",  "Reference constructeur"),
     ("CodeIM",       "IM Code",                   "Code IM"),
-    ("CONSTRUCTEUR", "Manufacturer",               "Constructeur"),
-    ("REFCONST",     "Manufacturer Part Number",   "Reference constructeur"),
-    ("MABEC",        "MABEC Code",                 "Code MABEC"),
-    ("COEF",         "Quantity",                   "Quantite"),
-    ("DESIGN EN",    "English Description",        "Designation anglaise"),
+    ("MABEC",        "MABEC Code",                "Code MABEC"),
+    ("COEF",         "Quantity",                  "Quantite"),
+    ("PR",           "Spare Part",                "Piece de rechange"),
+    ("SOUSENS",      "Sub Assembly",              "Sous Ensemble"),
+    ("INDICE",       "Release Index",             "Indice"),
+    ("MATIERE",      "Material",                  "Matiere"),
+    ("DIMENSIONS",   "Dimensions",                "Dimensions"),
+    ("MASSE",        "Weight",                    "Masse"),
+    ("CATEGORIE",    "Category",                  "Categorie"),
+    ("FIXATION",     "Fastening",                 "Fixation"),
+    ("COMMANDE",     "Order Code",                "Commande"),
+    ("Source Base",  "Base Source",               "Source Base"),
+    ("PR Specifique","Specific PR",               "PR Specifique"),
+    ("TRAITEMENT",   "Treatment",                 "Traitement"),
+    ("FOURNISSEUR",  "Supplier",                  "Fournisseur"),
+    ("CODE",         "Code",                      "Code"),
+    ("NORME",        "Standard Norm",             "Norme"),
 ]
 
-# ── All Trackable Columns (available in "All Columns" mode) ───────────────────
-ALL_TRACKABLE_COLUMNS: list[tuple[str, str, str]] = [
-    ("CodeIM",       "IM Code",                   "Code IM"),
-    ("CONSTRUCTEUR", "Manufacturer",               "Constructeur"),
-    ("REFCONST",     "Manufacturer Part Number",   "Reference constructeur"),
-    ("MABEC",        "MABEC Code",                 "Code MABEC"),
-    ("COEF",         "Quantity",                   "Quantite"),
-    ("DESIGN EN",    "English Description",        "Designation anglaise"),
-    ("DESIGN",       "French Description",         "Designation francaise"),
-    ("MATIERE",      "Material",                   "Matiere"),
-    ("DIMENSIONS",   "Dimensions",                 "Dimensions"),
-    ("MASSE",        "Weight",                     "Masse"),
-    ("PR",           "Spare Part",                 "Piece de rechange"),
-    ("INDICE",       "Release Index",              "Indice"),
-    ("CATEGORIE",    "Category",                   "Categorie"),
-]
+# ── All Trackable Columns ─────────────────────────────────────────────────────
+ALL_TRACKABLE_COLUMNS: list[tuple[str, str, str]] = CORE_TRACKED_COLUMNS
 
 # ── Bilingual Change Type Descriptions ─────────────────────────────────────────
 # Maps internal_key -> (english_change_type, french_change_type)
 CHANGE_TYPE_MAP: dict[str, tuple[str, str]] = {
-    "CodeIM":        ("IM Code Changed",                    "Code IM modifie"),
+    "NOPLAN":        ("Drawing Number Changed",             "No. Plan modifie"),
+    "NOPLANCHE":     ("Sheet Number Changed",               "No. Planche modifie"),
+    "DESIGN":        ("French Description Changed",         "Designation francaise modifiee"),
+    "DESIGN EN":     ("Description Changed",                "Designation modifiee"),
     "CONSTRUCTEUR":  ("Manufacturer Changed",               "Constructeur modifie"),
     "REFCONST":      ("Manufacturer Part Number Changed",   "Reference constructeur modifiee"),
+    "CodeIM":        ("IM Code Changed",                    "Code IM modifie"),
     "MABEC":         ("MABEC Code Changed",                 "Code MABEC modifie"),
     "COEF":          ("Quantity Changed",                   "Quantite modifiee"),
-    "DESIGN EN":     ("Description Changed",                "Designation modifiee"),
-    "DESIGN":        ("French Description Changed",         "Designation francaise modifiee"),
+    "PR":            ("Spare Part Status Changed",          "Statut piece de rechange modifie"),
+    "SOUSENS":       ("Sub Assembly Changed",               "Sous Ensemble modifie"),
+    "INDICE":        ("Release Index Changed",              "Indice modifie"),
     "MATIERE":       ("Material Changed",                   "Matiere modifiee"),
     "DIMENSIONS":    ("Dimensions Changed",                 "Dimensions modifiees"),
     "MASSE":         ("Weight Changed",                     "Masse modifiee"),
-    "PR":            ("Spare Part Status Changed",          "Statut piece de rechange modifie"),
-    "INDICE":        ("Release Index Changed",              "Indice de revision modifie"),
     "CATEGORIE":     ("Category Changed",                   "Categorie modifiee"),
+    "FIXATION":      ("Fastening Changed",                  "Fixation modifiee"),
+    "COMMANDE":      ("Order Code Changed",                 "Commande modifiee"),
+    "Source Base":   ("Base Source Changed",                "Source Base modifiee"),
+    "PR Specifique": ("Specific PR Changed",                "PR Specifique modifiee"),
+    "TRAITEMENT":    ("Treatment Changed",                  "Traitement modifie"),
+    "FOURNISSEUR":   ("Supplier Changed",                   "Fournisseur modifie"),
+    "CODE":          ("Code Changed",                       "Code modifie"),
+    "NORME":         ("Standard Norm Changed",              "Norme modifiee"),
     "_NEW_ITEM":     ("New Item",                           "Nouvel article"),
     "_DELETED":      ("Deleted Item",                       "Article supprime"),
 }
@@ -104,3 +124,4 @@ def get_column_display(internal_key: str) -> tuple[str, str]:
 def get_change_type(internal_key: str) -> tuple[str, str]:
     """Return (english_change_type, french_change_type) for a column key."""
     return CHANGE_TYPE_MAP.get(internal_key, (f"{internal_key} Changed", f"{internal_key} modifie"))
+
