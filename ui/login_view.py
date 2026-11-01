@@ -123,13 +123,13 @@ def render_login_page():
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 14px 28px;
-        background: rgba(22, 17, 38, 0.7);
+        padding: 14px 26px;
+        background: rgba(22, 17, 38, 0.72);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border: 1px solid rgba(104, 70, 198, 0.3);
-        border-radius: 9999px;
-        margin-bottom: 35px;
+        border-radius: 18px;
+        margin-bottom: 28px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
     }}
 
@@ -179,35 +179,36 @@ def render_login_page():
 
     /* Hero Branding Panel */
     .hero-card {{
-        padding: 40px 32px;
-        background: rgba(22, 17, 38, 0.65);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(104, 70, 198, 0.25);
-        border-radius: 28px;
+        padding: 42px 36px;
+        background: rgba(22, 17, 38, 0.72);
+        backdrop-filter: blur(28px);
+        -webkit-backdrop-filter: blur(28px);
+        border: 1px solid rgba(104, 70, 198, 0.3);
+        border-radius: 24px;
         box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
-        height: 100%;
+        min-height: 520px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        box-sizing: border-box;
     }}
 
     .hero-eyebrow {{
         color: #6EC1E4;
-        font-size: 0.82rem;
+        font-size: 0.8rem;
         font-weight: 700;
         letter-spacing: 0.14em;
         text-transform: uppercase;
-        margin-bottom: 14px;
+        margin-bottom: 12px;
     }}
 
     .hero-title {{
-        font-size: 2.35rem;
+        font-size: 2.15rem;
         font-weight: 800;
-        line-height: 1.15;
+        line-height: 1.2;
         letter-spacing: -0.02em;
         color: #FFFFFF;
-        margin-bottom: 16px;
+        margin-bottom: 14px;
     }}
 
     .hero-title span {{
@@ -218,36 +219,27 @@ def render_login_page():
 
     .hero-desc {{
         color: #CBD5E1;
-        font-size: 0.94rem;
+        font-size: 0.92rem;
         line-height: 1.6;
-        margin-bottom: 28px;
+        margin-bottom: 24px;
         font-weight: 400;
     }}
 
-
-    /* Feature Items */
+    /* Clean Unboxed Feature Items */
     .feat-row {{
         display: flex;
         flex-direction: column;
-        gap: 14px;
-        margin-bottom: 16px;
+        gap: 16px;
+        margin-bottom: 20px;
     }}
 
     .feat-item {{
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         gap: 14px;
-        padding: 14px 18px;
-        background: rgba(255, 255, 255, 0.035);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        transition: all 0.25s ease;
-    }}
-
-    .feat-item:hover {{
-        background: rgba(104, 70, 198, 0.12);
-        border-color: rgba(104, 70, 198, 0.4);
-        transform: translateY(-2px);
+        padding: 4px 0;
+        background: transparent !important;
+        border: none !important;
     }}
 
     .feat-icon {{
@@ -256,7 +248,8 @@ def render_login_page():
         justify-content: center;
         width: 36px;
         height: 36px;
-        background: rgba(104, 70, 198, 0.25);
+        background: rgba(104, 70, 198, 0.22);
+        border: 1px solid rgba(110, 193, 228, 0.25);
         border-radius: 10px;
         flex-shrink: 0;
     }}
@@ -274,15 +267,20 @@ def render_login_page():
         line-height: 1.35;
     }}
 
-    /* Unified Login Form Card */
+    /* Twin Card Layout: Balanced Login Form Card */
     div[data-testid="stForm"] {{
-        padding: 44px 38px 38px 38px !important;
-        background: rgba(22, 17, 38, 0.78) !important;
+        padding: 42px 36px !important;
+        background: rgba(22, 17, 38, 0.72) !important;
         backdrop-filter: blur(28px) !important;
         -webkit-backdrop-filter: blur(28px) !important;
-        border: 1px solid rgba(104, 70, 198, 0.35) !important;
-        border-radius: 28px !important;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(104, 70, 198, 0.12) !important;
+        border: 1px solid rgba(104, 70, 198, 0.3) !important;
+        border-radius: 24px !important;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45) !important;
+        min-height: 520px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        box-sizing: border-box !important;
     }}
 
     .login-heading {{
@@ -352,6 +350,17 @@ def render_login_page():
         transform: translateY(-2px) !important;
     }}
 
+    /* Harmonized Footers */
+    .hero-footer,
+    .login-card-footer {{
+        padding-top: 18px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 0.76rem;
+        color: #64748B;
+        text-align: center;
+        letter-spacing: 0.02em;
+    }}
+
     /* Hide 'Press Enter to submit form' instructions completely */
     [data-testid="InputInstructions"],
     .stForm [data-testid="InputInstructions"],
@@ -376,52 +385,64 @@ def render_login_page():
             <span style="color: #64748B; font-size: 1.1rem;">|</span>
             <span style="font-weight: 700; font-size: 0.95rem; color: #FFFFFF; letter-spacing: 0.02em;">BOM Intelligence</span>
         </div>
+        <div class="expleo-portal-tag">
+            <span class="pulse-dot"></span>
+            <span>Enterprise Portal</span>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
-    # Main Grid (Hero on left, Login Form on right)
-    col_left, col_right = st.columns([7, 5], gap="large")
+    # Main Grid (Balanced Twin Columns)
+    col_left, col_right = st.columns([6, 6], gap="large")
 
     with col_left:
         st.markdown("""<div class="hero-card">
 <div>
-<div class="hero-eyebrow">EXPLEO DIGITAL TRANSFORMATION</div>
-<div class="hero-title">Accelerating <span>Engineering Change Intelligence</span></div>
-<div class="hero-desc">Automated comparison engine for complex engineering BOMs. Detects additions, deletions, and field modifications with pinpoint accuracy.</div>
-<div class="feat-row">
-<div class="feat-item">
-<div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6EC1E4" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
-<div>
-<div class="feat-text-title">Automated Detection</div>
-<div class="feat-text-sub">Rapid structural scanning with automated item keying and intelligent classification.</div>
+    <div class="hero-eyebrow">EXPLEO DIGITAL TRANSFORMATION</div>
+    <div class="hero-title">Accelerating <span>Engineering Change Intelligence</span></div>
+    <div class="hero-desc">Automated comparison engine for complex engineering BOMs. Detects additions, deletions, and field modifications with pinpoint accuracy.</div>
+    <div class="feat-row">
+        <div class="feat-item">
+            <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6EC1E4" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+            <div>
+                <div class="feat-text-title">Automated Detection</div>
+                <div class="feat-text-sub">Rapid structural scanning with automated item keying and intelligent classification.</div>
+            </div>
+        </div>
+        <div class="feat-item">
+            <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6EC1E4" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+            <div>
+                <div class="feat-text-title">Bilingual French &amp; English Output</div>
+                <div class="feat-text-sub">Generates executive-ready Excel reports with color-coded audits matching industrial standards.</div>
+            </div>
+        </div>
+        <div class="feat-item">
+            <div class="feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6EC1E4" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div>
+                <div class="feat-text-title">Enterprise-Grade Reliability</div>
+                <div class="feat-text-sub">Optimized for high-volume engineering files with zero data loss and deterministic outcomes.</div>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-<div class="feat-item">
-<div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6EC1E4" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-<div>
-<div class="feat-text-title">Bilingual French &amp; English Output</div>
-<div class="feat-text-sub">Generates executive-ready Excel reports with color-coded audits matching industrial standards.</div>
-</div>
-</div>
-<div class="feat-item">
-<div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6EC1E4" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-<div>
-<div class="feat-text-title">Enterprise-Grade Reliability</div>
-<div class="feat-text-sub">Optimized for high-volume engineering files with zero data loss and deterministic outcomes.</div>
-</div>
-</div>
-</div>
+<div class="hero-footer">
+    Industrial Engineering &middot; Automated Audit Engine
 </div>
 </div>""", unsafe_allow_html=True)
 
     with col_right:
         with st.form("expleo_login_form", clear_on_submit=False):
-            st.markdown("""<div class="login-heading">Welcome Back</div>
-<div class="login-sub">Sign in with your Expleo credentials to access the BOM comparison workspace.</div>""", unsafe_allow_html=True)
+            st.markdown("""<div>
+<div class="login-heading">Welcome Back</div>
+<div class="login-sub">Sign in with your Expleo credentials to access the BOM comparison workspace.</div>
+</div>""", unsafe_allow_html=True)
             username = st.text_input("Username or Expleo Email", placeholder="e.g. user@expleogroup.com", key="login_user")
             password = st.text_input("Password", type="password", placeholder="Enter your password", key="login_pass")
-            st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
             submit_login = st.form_submit_button("Sign In →", type="primary", use_container_width=True)
+            st.markdown("""<div class="login-card-footer">
+Expleo Group &copy; 2026 &middot; Secure Enterprise Authentication
+</div>""", unsafe_allow_html=True)
 
         if submit_login:
             if not username or not password:
@@ -436,7 +457,3 @@ def render_login_page():
                     st.rerun()
                 else:
                     st.error("Invalid username or password. Please verify your credentials.")
-
-        st.markdown("""<div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; font-size: 0.76rem; color: #64748B;">
-Expleo Group &copy; 2026
-</div>""", unsafe_allow_html=True)
