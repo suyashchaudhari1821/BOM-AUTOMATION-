@@ -181,11 +181,6 @@ def _render_main() -> None:
                     Upload your baseline and updated BOM files above, then click <b>Run Comparison</b>.<br>
                     The automated engine evaluates all part records, detects additions and deletions, and highlights field-level modifications.
                 </div>
-                <div class="empty-state-badges">
-                    <span class="badge-pill">Automated Change Detection</span>
-                    <span class="badge-pill">Multi-Attribute Comparison</span>
-                    <span class="badge-pill">Bilingual Excel Report</span>
-                </div>
             </div>
             """,
             unsafe_allow_html=True,
