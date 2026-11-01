@@ -71,16 +71,12 @@ def render(user_name: str = "user@expleogroup.com", user_login: str = "user@expl
 # ── Top Bar ───────────────────────────────────────────────────────────────────
 def _render_topbar(user_name: str) -> None:
     logo_uri = _get_logo_data_uri()
-    icon_uri = _get_icon_data_uri()
-    
-    icon_html = f'<img src="{icon_uri}" class="nav-icon" alt="Expleo Mark" />' if icon_uri else ""
 
     col_brand, col_actions = st.columns([6, 6])
     with col_brand:
         st.markdown(
             f"""
             <div class="expleo-nav-brand">
-                {icon_html}
                 <img src="{logo_uri}" class="nav-logo" alt="Expleo" />
                 <div class="nav-divider"></div>
                 <div>

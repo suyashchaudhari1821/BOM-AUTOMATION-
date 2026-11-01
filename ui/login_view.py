@@ -389,8 +389,7 @@ def render_login_page():
     # Top Brand Bar
     st.markdown(f"""
     <div class="expleo-top-brand">
-        <div style="display: flex; align-items: center; gap: 14px;">
-            {icon_html}
+        <div style="display: flex; align-items: center; gap: 16px;">
             <img src="{logo_uri}" class="expleo-logo-img" alt="Expleo" />
             <span style="color: #64748B; font-size: 1.1rem;">|</span>
             <span style="font-weight: 700; font-size: 0.95rem; color: #FFFFFF; letter-spacing: 0.02em;">Tooling BOM Intelligence</span>
