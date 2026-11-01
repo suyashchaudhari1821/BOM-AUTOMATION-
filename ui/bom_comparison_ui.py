@@ -110,7 +110,7 @@ def _render_topbar(user_name: str) -> None:
 
 # ── Upload / Action Bar ───────────────────────────────────────────────────────
 def _render_upload_bar() -> None:
-    st.markdown('<div class="upload-container">', unsafe_allow_html=True)
+    st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
     c1, c2, c3 = st.columns([5, 5, 2.5], gap="medium")
 
@@ -151,7 +151,7 @@ def _render_upload_bar() -> None:
                     st.session_state.pop(key, None)
                 st.rerun()
 
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
 
     if run_clicked and both_uploaded:
         _run_comparison(old_file, new_file)
@@ -174,7 +174,7 @@ def _render_main() -> None:
             """
             <div class="empty-state-card">
                 <div class="empty-state-icon">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#805CE5" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#805CE5" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
                 </div>
                 <div class="empty-state-title">Ready for Comparison</div>
                 <div class="empty-state-desc">
@@ -621,16 +621,57 @@ def _inject_css() -> None:
 
         /* Custom File Uploader styling */
         [data-testid="stFileUploader"] {
-            background: rgba(14, 10, 24, 0.65) !important;
-            border: 1px dashed rgba(104, 70, 198, 0.45) !important;
-            border-radius: 14px !important;
-            padding: 8px 12px !important;
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+
+        [data-testid="stFileUploader"] section,
+        [data-testid="stFileUploadDropzone"],
+        div[data-testid="stFileUploader"] > section,
+        div[data-testid="stFileUploaderDropzone"],
+        section[data-testid="stFileUploadDropzone"] {
+            background: rgba(22, 17, 38, 0.82) !important;
+            border: 1px dashed rgba(104, 70, 198, 0.55) !important;
+            border-radius: 16px !important;
+            padding: 16px 20px !important;
+            color: #F8FAFC !important;
             transition: all 0.25s ease !important;
         }
 
-        [data-testid="stFileUploader"]:hover {
+        [data-testid="stFileUploadDropzone"]:hover,
+        [data-testid="stFileUploader"] section:hover {
             border-color: #805CE5 !important;
-            background: rgba(20, 14, 36, 0.8) !important;
+            background: rgba(28, 20, 52, 0.95) !important;
+            box-shadow: 0 0 24px rgba(104, 70, 198, 0.3) !important;
+        }
+
+        [data-testid="stFileUploadDropzone"] *,
+        [data-testid="stFileUploader"] section * {
+            color: #E2E8F0 !important;
+        }
+
+        [data-testid="stFileUploadDropzone"] small,
+        [data-testid="stFileUploader"] section small {
+            color: #94A3B8 !important;
+        }
+
+        [data-testid="stFileUploadDropzone"] button,
+        [data-testid="stFileUploader"] section button {
+            background: rgba(104, 70, 198, 0.3) !important;
+            border: 1px solid rgba(104, 70, 198, 0.55) !important;
+            color: #FFFFFF !important;
+            border-radius: 9999px !important;
+            padding: 6px 18px !important;
+            font-weight: 600 !important;
+            transition: all 0.2s ease !important;
+        }
+
+        [data-testid="stFileUploadDropzone"] button:hover,
+        [data-testid="stFileUploader"] section button:hover {
+            background: rgba(104, 70, 198, 0.6) !important;
+            border-color: #805CE5 !important;
+            color: #FFFFFF !important;
         }
 
         /* Primary Button */
