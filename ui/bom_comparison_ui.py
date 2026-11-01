@@ -148,18 +148,6 @@ def _render_upload_bar() -> None:
                             "old_bom_upload", "new_bom_upload"]:
                     st.session_state.pop(key, None)
                 st.rerun()
-    # ── Upload Readiness Progress Indicator ──
-    uploaded_count = (1 if old_file is not None else 0) + (1 if new_file is not None else 0)
-    pct = uploaded_count * 50
-    if uploaded_count == 0:
-        bar_text = "Upload Readiness: 0 of 2 files uploaded (0%) • Select both BOM files to begin"
-    elif uploaded_count == 1:
-        ready_label = "Old BOM ready, waiting for New BOM..." if old_file is not None else "New BOM ready, waiting for Old BOM..."
-        bar_text = f"Upload Readiness: 1 of 2 files ready (50%) • {ready_label}"
-    else:
-        bar_text = "Upload Readiness: Both BOM files ready (100%) • Ready to compare!"
-
-    st.progress(pct, text=bar_text)
     st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
 
     if run_clicked and both_uploaded:
@@ -206,24 +194,6 @@ def _render_results(results: dict) -> None:
     old_filename = results.get("old_filename", "Old BOM")
     new_filename = results.get("new_filename", "New BOM")
     export_bytes = results.get("export_bytes")
-
-    # Breadcrumb Banner
-    st.markdown(
-        f"""
-        <div class="diff-banner">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <span class="banner-pill banner-old">OLD BOM</span>
-                <span class="banner-file">{old_filename}</span>
-            </div>
-            <div class="banner-arrow">&rarr;</div>
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <span class="banner-pill banner-new">NEW BOM</span>
-                <span class="banner-file">{new_filename}</span>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
 
     # Download Bar
     dl_col, _, reset_col = st.columns([4, 5, 2.5])
