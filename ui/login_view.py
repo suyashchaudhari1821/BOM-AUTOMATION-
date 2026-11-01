@@ -401,67 +401,49 @@ def render_login_page():
     col_left, col_right = st.columns([7, 5], gap="large")
 
     with col_left:
-        st.markdown("""
-        <div class="hero-card">
-            <div>
-                <div class="hero-eyebrow">
-                    EXPLEO DIGITAL TRANSFORMATION
-                </div>
-                <div class="hero-title">
-                    Accelerating <span>Engineering Change Intelligence</span>
-                </div>
-                
-                <div class="brand-tagline-box">
-                    <div style="font-size: 1.4rem; font-weight: 800; color: #FFFFFF; letter-spacing: -0.01em;">[ expleo ]</div>
-                    <div>
-                        <div class="brand-tagline-text">Think bold, act reliable</div>
-                        <div class="brand-tagline-sub">Global Integrated Engineering</div>
-                    </div>
-                </div>
-
-                <div class="hero-desc">
-                    Automated comparison engine for complex engineering BOMs. Detects additions, deletions, and field modifications with pinpoint accuracy.
-                </div>
-                <div class="feat-row">
-                    <div class="feat-item">
-                        <div class="feat-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6EC1E4" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-                        </div>
-                        <div>
-                            <div class="feat-text-title">Automated Detection</div>
-                            <div class="feat-text-sub">Rapid structural scanning with automated item keying and intelligent classification.</div>
-                        </div>
-                    </div>
-                    <div class="feat-item">
-                        <div class="feat-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6EC1E4" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                        </div>
-                        <div>
-                            <div class="feat-text-title">Bilingual French &amp; English Output</div>
-                            <div class="feat-text-sub">Generates executive-ready Excel reports with color-coded audits matching industrial standards.</div>
-                        </div>
-                    </div>
-                    <div class="feat-item">
-                        <div class="feat-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6EC1E4" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        </div>
-                        <div>
-                            <div class="feat-text-title">Enterprise-Grade Reliability</div>
-                            <div class="feat-text-sub">Optimized for high-volume tooling files with zero data loss and deterministic outcomes.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown("""<div class="hero-card">
+<div>
+<div class="hero-eyebrow">EXPLEO DIGITAL TRANSFORMATION</div>
+<div class="hero-title">Accelerating <span>Engineering Change Intelligence</span></div>
+<div class="brand-tagline-box">
+<div style="font-size: 1.4rem; font-weight: 800; color: #FFFFFF; letter-spacing: -0.01em;">[ expleo ]</div>
+<div>
+<div class="brand-tagline-text">Think bold, act reliable</div>
+<div class="brand-tagline-sub">Global Integrated Engineering</div>
+</div>
+</div>
+<div class="hero-desc">Automated comparison engine for complex engineering BOMs. Detects additions, deletions, and field modifications with pinpoint accuracy.</div>
+<div class="feat-row">
+<div class="feat-item">
+<div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6EC1E4" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+<div>
+<div class="feat-text-title">Automated Detection</div>
+<div class="feat-text-sub">Rapid structural scanning with automated item keying and intelligent classification.</div>
+</div>
+</div>
+<div class="feat-item">
+<div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6EC1E4" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+<div>
+<div class="feat-text-title">Bilingual French &amp; English Output</div>
+<div class="feat-text-sub">Generates executive-ready Excel reports with color-coded audits matching industrial standards.</div>
+</div>
+</div>
+<div class="feat-item">
+<div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6EC1E4" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+<div>
+<div class="feat-text-title">Enterprise-Grade Reliability</div>
+<div class="feat-text-sub">Optimized for high-volume tooling files with zero data loss and deterministic outcomes.</div>
+</div>
+</div>
+</div>
+</div>
+</div>""", unsafe_allow_html=True)
 
     with col_right:
-        st.markdown("""
-        <div class="login-box">
-            <div class="login-heading">Welcome Back</div>
-            <div class="login-sub">Sign in with your Expleo credentials to access the tooling comparison workspace.</div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown("""<div class="login-box">
+<div class="login-heading">Welcome Back</div>
+<div class="login-sub">Sign in with your Expleo credentials to access the tooling comparison workspace.</div>
+</div>""", unsafe_allow_html=True)
 
         with st.form("expleo_login_form", clear_on_submit=False):
             username = st.text_input("Username or Expleo Email", placeholder="e.g. user@expleogroup.com", key="login_user")
@@ -482,8 +464,6 @@ def render_login_page():
                 else:
                     st.error("Invalid username or password. Please verify your credentials.")
 
-        st.markdown("""
-        <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; font-size: 0.76rem; color: #64748B;">
-            Expleo Group &copy; 2026
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown("""<div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; font-size: 0.76rem; color: #64748B;">
+Expleo Group &copy; 2026
+</div>""", unsafe_allow_html=True)
