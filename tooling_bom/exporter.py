@@ -130,19 +130,11 @@ def _build_sheet(
     ws.merge_cells("A1:H1")
     _write_cell(ws, 1, 1, title_en, fill=FILL_TITLE, font=WHITE_FONT, align="left")
 
-    # ── Row 2: Old BOM reference ──────────────────────────────────────────────
-    _write_cell(ws, 2, 1, "Old BOM / Ancienne BOM", font=BOLD_FONT)
-    _write_cell(ws, 2, 2, old_filename, font=NORMAL_FONT)
+    # ── Row 2: Empty separator ────────────────────────────────────────────────
+    ws.row_dimensions[2].height = 8
 
-    # ── Row 3: New BOM reference ──────────────────────────────────────────────
-    _write_cell(ws, 3, 1, "New BOM / Nouvelle BOM", font=BOLD_FONT)
-    _write_cell(ws, 3, 2, new_filename, font=NORMAL_FONT)
-
-    # ── Row 4: Empty separator ────────────────────────────────────────────────
-    ws.row_dimensions[4].height = 8
-
-    # ── Row 5: KPI counts ────────────────────────────────────────────────────
-    ws.row_dimensions[5].height = 24
+    # ── Row 3: KPI counts ────────────────────────────────────────────────────
+    ws.row_dimensions[3].height = 24
     kpi_data = [
         ("New items",       new_count),
         ("Deleted items",   deleted_count),
@@ -152,14 +144,14 @@ def _build_sheet(
     for i, (label, count) in enumerate(kpi_data):
         col_label = i * 2 + 1
         col_value = i * 2 + 2
-        _write_cell(ws, 5, col_label, label, fill=FILL_KPI, font=BOLD_FONT, align="center", border=CELL_BORDER)
-        _write_cell(ws, 5, col_value, count,  fill=FILL_KPI, font=BOLD_FONT, align="center", border=CELL_BORDER)
+        _write_cell(ws, 3, col_label, label, fill=FILL_KPI, font=BOLD_FONT, align="center", border=CELL_BORDER)
+        _write_cell(ws, 3, col_value, count,  fill=FILL_KPI, font=BOLD_FONT, align="center", border=CELL_BORDER)
 
-    # ── Row 6: Empty separator ───────────────────────────────────────────────
-    ws.row_dimensions[6].height = 8
+    # ── Row 4: Empty separator ───────────────────────────────────────────────
+    ws.row_dimensions[4].height = 8
 
-    # ── Row 7: English column headers ─────────────────────────────────────────
-    ws.row_dimensions[7].height = 24
+    # ── Row 5: English column headers ─────────────────────────────────────────
+    ws.row_dimensions[5].height = 24
     headers_en = [
         "Item No.", "Part Category",
         "Change Type", "Change Type",
@@ -167,10 +159,10 @@ def _build_sheet(
         "Old Value", "New Value",
     ]
     for col, h in enumerate(headers_en, 1):
-        _write_cell(ws, 7, col, h, fill=FILL_HEADER_EN, font=WHITE_FONT, align="center" if col <= 2 else "left", border=CELL_BORDER)
+        _write_cell(ws, 5, col, h, fill=FILL_HEADER_EN, font=WHITE_FONT, align="center" if col <= 2 else "left", border=CELL_BORDER)
 
-    # ── Row 8: French column headers ─────────────────────────────────────────
-    ws.row_dimensions[8].height = 24
+    # ── Row 6: French column headers ─────────────────────────────────────────
+    ws.row_dimensions[6].height = 24
     headers_fr = [
         "No. Repere", "Categorie de piece",
         "Type of Change", "Type de modification",
@@ -178,10 +170,10 @@ def _build_sheet(
         "Ancienne valeur", "Nouvelle valeur",
     ]
     for col, h in enumerate(headers_fr, 1):
-        _write_cell(ws, 8, col, h, fill=FILL_HEADER_FR, font=BOLD_FONT, align="center" if col <= 2 else "left", border=CELL_BORDER)
+        _write_cell(ws, 6, col, h, fill=FILL_HEADER_FR, font=BOLD_FONT, align="center" if col <= 2 else "left", border=CELL_BORDER)
 
-    # ── Row 9+: Data rows ────────────────────────────────────────────────────
-    data_start_row = 9
+    # ── Row 7+: Data rows ────────────────────────────────────────────────────
+    data_start_row = 7
     last_row = data_start_row
     for row_idx, change in enumerate(rows, start=data_start_row):
         last_row = row_idx
@@ -237,16 +229,14 @@ def _build_sheet(
         ws.column_dimensions[get_column_letter(col_idx)].width = width
 
     # ── Title row heights ─────────────────────────────────────────────────────
-    ws.row_dimensions[1].height = 26
-    ws.row_dimensions[2].height = 20
-    ws.row_dimensions[3].height = 20
+    ws.row_dimensions[1].height = 28
 
     # ── Fully Scrollable (No Freeze Panes to avoid duplicate split dashboards) ─
     ws.freeze_panes = None
 
     # ── Auto-filter on header row ─────────────────────────────────────────────
     if last_row >= data_start_row:
-        ws.auto_filter.ref = f"A7:H{last_row}"
+        ws.auto_filter.ref = f"A5:H{last_row}"
 
     # ── Show Gridlines ────────────────────────────────────────────────────────
     ws.views.sheetView[0].showGridLines = True
