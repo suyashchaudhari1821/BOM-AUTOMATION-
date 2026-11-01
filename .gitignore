@@ -1,0 +1,20 @@
+# Environments
+.env
+venv/
+.venv/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Excel & Data
+*.xlsx
+*.xlsm
+*.csv
+data/activity_log.json
+
+# Dependencies output
+installed_packages.txt

@@ -1,0 +1,29 @@
+{
+  "total": "72,535",
+  "segments": [
+    {
+      "label": "No Change",
+      "value": "71,841",
+      "percent": 99.0,
+      "color": "#3B82F6"
+    },
+    {
+      "label": "Modified",
+      "value": "141",
+      "percent": 0.2,
+      "color": "#F59E0B"
+    },
+    {
+      "label": "Added",
+      "value": "499",
+      "percent": 0.7,
+      "color": "#10B981"
+    },
+    {
+      "label": "Deleted",
+      "value": "54",
+      "percent": 0.1,
+      "color": "#EF4444"
+    }
+  ]
+}
