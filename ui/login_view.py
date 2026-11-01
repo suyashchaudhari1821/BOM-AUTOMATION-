@@ -224,31 +224,6 @@ def render_login_page():
         font-weight: 400;
     }}
 
-    /* Corporate Tagline Banner */
-    .brand-tagline-box {{
-        background: linear-gradient(135deg, rgba(104, 70, 198, 0.35) 0%, rgba(128, 92, 229, 0.2) 100%);
-        border: 1px solid rgba(104, 70, 198, 0.4);
-        border-radius: 14px;
-        padding: 14px 20px;
-        margin-bottom: 26px;
-        display: flex;
-        align-items: center;
-        gap: 14px;
-    }}
-
-    .brand-tagline-text {{
-        font-size: 0.88rem;
-        font-weight: 600;
-        color: #FFFFFF;
-        letter-spacing: 0.04em;
-    }}
-
-    .brand-tagline-sub {{
-        font-size: 0.74rem;
-        color: #CBD5E1;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-    }}
 
     /* Feature Items */
     .feat-row {{
@@ -412,13 +387,6 @@ def render_login_page():
 <div>
 <div class="hero-eyebrow">EXPLEO DIGITAL TRANSFORMATION</div>
 <div class="hero-title">Accelerating <span>Engineering Change Intelligence</span></div>
-<div class="brand-tagline-box">
-<div style="font-size: 1.4rem; font-weight: 800; color: #FFFFFF; letter-spacing: -0.01em;">[ expleo ]</div>
-<div>
-<div class="brand-tagline-text">Think bold, act reliable</div>
-<div class="brand-tagline-sub">Global Integrated Engineering</div>
-</div>
-</div>
 <div class="hero-desc">Automated comparison engine for complex engineering BOMs. Detects additions, deletions, and field modifications with pinpoint accuracy.</div>
 <div class="feat-row">
 <div class="feat-item">
