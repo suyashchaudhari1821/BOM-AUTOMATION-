@@ -12,7 +12,7 @@ Single source of truth for:
 # ── Column Aliases ─────────────────────────────────────────────────────────────
 # Maps internal key -> list of all known raw names (case-insensitive matching)
 COLUMN_ALIASES: dict[str, list[str]] = {
-    "REPERE":       ["REPERE", "Baloon #", "Balloon #", "Item No", "No. Repere", "repere", "No Repere"],
+    "REPERE":       ["REPERE", "Baloon #", "Balloon #", "Item No", "Item No.", "Item Number", "Item #", "Item", "No. Repere", "repere", "No Repere"],
     "NOPLAN":       ["NOPLAN", "dwg#", "dwg #", "Drawing No", "No Plan", "NOPLAN"],
     "NOPLANCHE":    ["NOPLANCHE", "page #", "page#", "Page", "No Planche", "NOPLANCHE"],
     "DESIGN":       ["DESIGN", "Designation FRANCAISE", "description FR", "designation", "Description FR"],

@@ -2,9 +2,14 @@
 app.py — Tooling BOM Comparison System — Expleo Engineering Platform.
 """
 
+import sys
 from pathlib import Path
 from PIL import Image
 import streamlit as st
+
+ROOT_DIR = Path(__file__).resolve().parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
 from ui.bom_comparison_ui import render as render_bom_comparison
 from ui.login_view import render_login_page

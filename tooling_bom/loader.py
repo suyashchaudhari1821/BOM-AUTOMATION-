@@ -24,7 +24,8 @@ from tooling_bom.column_config import COLUMN_ALIASES, STANDARD_THRESHOLD
 
 # ── Constants ──────────────────────────────────────────────────────────────────
 HEADER_SCAN_ROWS   = 35          # How many rows to scan for the header
-REPERE_ANCHORS     = {"REPERE", "BALOON #", "BALLOON #", "NO. REPERE", "NO REPERE"}
+REPERE_ANCHORS     = {"REPERE", "BALOON #", "BALLOON #", "NO. REPERE", "NO REPERE",
+                      "ITEM NO", "ITEM NO.", "ITEM NUMBER", "ITEM #", "ITEM"}
 SECONDARY_ANCHORS  = {"CONSTRUCTEUR", "COEF", "CODEÍM", "CODEIM", "MABEC",
                       "MAKER", "MANUFACTURER", "QTY", "QUANTITY"}
 MIN_SECONDARY_HITS = 2           # Minimum secondary anchor matches to confirm header
