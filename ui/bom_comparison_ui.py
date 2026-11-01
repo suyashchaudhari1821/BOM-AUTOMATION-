@@ -398,16 +398,24 @@ def _render_table(rows: list[dict], partition: str) -> None:
     )
 
 
+@st.cache_data(show_spinner=False)
+def _cached_load_bom(file_bytes: bytes, file_name: str) -> dict:
+    """Cache parsed BOM structure by raw bytes to avoid re-parsing on reruns."""
+    return load_bom(io.BytesIO(file_bytes))
+
+
 # ── Comparison Runner ─────────────────────────────────────────────────────────
 def _run_comparison(old_file, new_file) -> None:
     try:
         with st.spinner("Parsing Old BOM..."):
-            old_bytes = io.BytesIO(old_file.read())
-            old_result = load_bom(old_bytes)
+            old_file.seek(0)
+            old_data = old_file.read()
+            old_result = _cached_load_bom(old_data, getattr(old_file, "name", "old_bom"))
 
         with st.spinner("Parsing New BOM..."):
-            new_bytes = io.BytesIO(new_file.read())
-            new_result = load_bom(new_bytes)
+            new_file.seek(0)
+            new_data = new_file.read()
+            new_result = _cached_load_bom(new_data, getattr(new_file, "name", "new_bom"))
 
         columns_to_compare = CORE_TRACKED_COLUMNS
 
