@@ -5,3 +5,8 @@ backgroundColor = "#090710"
 secondaryBackgroundColor = "#161126"
 textColor = "#F8FAFC"
 font = "sans serif"
+
+[server]
+enableXsrfProtection = false
+enableCORS = false
+maxUploadSize = 200
