@@ -299,46 +299,51 @@ def render_login_page():
         line-height: 1.35;
     }}
 
-    /* Login Form Card */
-    .login-box {{
-        padding: 40px 36px 32px 36px;
-        background: rgba(26, 20, 46, 0.82);
-        backdrop-filter: blur(28px);
-        -webkit-backdrop-filter: blur(28px);
-        border: 1px solid rgba(104, 70, 198, 0.4);
-        border-radius: 28px;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(104, 70, 198, 0.15);
+    /* Unified Login Form Card */
+    div[data-testid="stForm"] {{
+        padding: 44px 38px 38px 38px !important;
+        background: rgba(22, 17, 38, 0.78) !important;
+        backdrop-filter: blur(28px) !important;
+        -webkit-backdrop-filter: blur(28px) !important;
+        border: 1px solid rgba(104, 70, 198, 0.35) !important;
+        border-radius: 28px !important;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(104, 70, 198, 0.12) !important;
     }}
 
     .login-heading {{
-        font-size: 1.6rem;
-        font-weight: 800;
-        color: #FFFFFF;
-        margin-bottom: 6px;
-        letter-spacing: -0.01em;
+        font-size: 1.85rem !important;
+        font-weight: 800 !important;
+        color: #FFFFFF !important;
+        margin-bottom: 8px !important;
+        letter-spacing: -0.02em !important;
     }}
 
     .login-sub {{
-        font-size: 0.85rem;
-        color: #94A3B8;
-        margin-bottom: 24px;
+        font-size: 0.9rem !important;
+        color: #94A3B8 !important;
+        margin-bottom: 28px !important;
+        line-height: 1.5 !important;
     }}
 
     /* Streamlit Input Styling Overrides */
+    div[data-testid="stTextInput"] {{
+        margin-bottom: 18px !important;
+    }}
+
     div[data-testid="stTextInput"] label {{
         color: #E2E8F0 !important;
         font-weight: 600 !important;
-        font-size: 0.85rem !important;
-        margin-bottom: 6px !important;
+        font-size: 0.88rem !important;
+        margin-bottom: 8px !important;
         letter-spacing: 0.02em !important;
     }}
 
     div[data-testid="stTextInput"] input {{
-        background: rgba(14, 10, 24, 0.75) !important;
+        background: rgba(14, 10, 24, 0.85) !important;
         border: 1px solid rgba(104, 70, 198, 0.35) !important;
-        border-radius: 12px !important;
+        border-radius: 14px !important;
         color: #FFFFFF !important;
-        padding: 12px 16px !important;
+        padding: 14px 18px !important;
         font-size: 0.95rem !important;
         transition: all 0.25s ease !important;
     }}
@@ -346,27 +351,29 @@ def render_login_page():
     div[data-testid="stTextInput"] input:focus {{
         border-color: #805CE5 !important;
         box-shadow: 0 0 0 3px rgba(104, 70, 198, 0.35) !important;
-        background: rgba(18, 12, 32, 0.9) !important;
+        background: rgba(18, 12, 32, 0.95) !important;
     }}
 
-    /* Primary Button Styling */
+    /* Expleo Violet Primary Button Styling */
+    div[data-testid="stFormSubmitButton"] button,
     div[data-testid="stButton"] button[kind="primary"] {{
         background: linear-gradient(135deg, #6846C6 0%, #805CE5 100%) !important;
         color: #FFFFFF !important;
         font-weight: 700 !important;
-        font-size: 0.95rem !important;
+        font-size: 1rem !important;
         letter-spacing: 0.04em !important;
-        padding: 14px 24px !important;
+        padding: 15px 28px !important;
         border-radius: 9999px !important;
         border: none !important;
-        box-shadow: 0 8px 24px rgba(104, 70, 198, 0.45) !important;
+        box-shadow: 0 8px 24px rgba(104, 70, 198, 0.5) !important;
         transition: all 0.3s ease !important;
+        margin-top: 10px !important;
     }}
 
-    div[data-testid="stButton"] button[kind="primary"]:hover,
-    div[data-testid="stFormSubmitButton"] button:hover {{
+    div[data-testid="stFormSubmitButton"] button:hover,
+    div[data-testid="stButton"] button[kind="primary"]:hover {{
         background: linear-gradient(135deg, #7853DD 0%, #906DF0 100%) !important;
-        box-shadow: 0 12px 30px rgba(104, 70, 198, 0.6) !important;
+        box-shadow: 0 12px 32px rgba(104, 70, 198, 0.7) !important;
         transform: translateY(-2px) !important;
     }}
 
@@ -440,14 +447,12 @@ def render_login_page():
 </div>""", unsafe_allow_html=True)
 
     with col_right:
-        st.markdown("""<div class="login-box">
-<div class="login-heading">Welcome Back</div>
-<div class="login-sub">Sign in with your Expleo credentials to access the BOM comparison workspace.</div>
-</div>""", unsafe_allow_html=True)
-
         with st.form("expleo_login_form", clear_on_submit=False):
+            st.markdown("""<div class="login-heading">Welcome Back</div>
+<div class="login-sub">Sign in with your Expleo credentials to access the BOM comparison workspace.</div>""", unsafe_allow_html=True)
             username = st.text_input("Username or Expleo Email", placeholder="e.g. user@expleogroup.com", key="login_user")
             password = st.text_input("Password", type="password", placeholder="Enter your password", key="login_pass")
+            st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
             submit_login = st.form_submit_button("Sign In →", type="primary", use_container_width=True)
 
         if submit_login:
