@@ -14,15 +14,8 @@ if str(ROOT_DIR) not in sys.path:
 from ui.bom_comparison_ui import render as render_bom_comparison
 from ui.login_view import render_login_page
 
-# Load Expleo icon for browser tab
-favicon_path = Path(__file__).parent / "ui" / "favicon.png"
-if favicon_path.exists():
-    try:
-        tab_icon = Image.open(favicon_path)
-    except Exception:
-        tab_icon = str(favicon_path)
-else:
-    tab_icon = "ui/expleo_logo.png"
+# Expleo favicon for browser tab (URL prevents in-memory media storage misses on reboot)
+tab_icon = "https://expleo.com/favicon.ico"
 
 st.set_page_config(
     page_title="Expleo | BOM Intelligence",
