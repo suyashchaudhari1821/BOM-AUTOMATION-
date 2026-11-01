@@ -80,7 +80,7 @@ def _render_topbar(user_name: str) -> None:
                 <img src="{logo_uri}" class="nav-logo" alt="Expleo" />
                 <div class="nav-divider"></div>
                 <div>
-                    <div class="nav-title">Tooling BOM Intelligence Platform</div>
+                    <div class="nav-title">BOM Intelligence Platform</div>
                     <div class="nav-sub">Expleo Engineering &middot; Automated Change Detection</div>
                 </div>
             </div>

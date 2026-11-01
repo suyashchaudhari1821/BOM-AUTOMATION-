@@ -20,7 +20,7 @@ else:
     tab_icon = "ui/expleo_logo.png"
 
 st.set_page_config(
-    page_title="Expleo | Tooling BOM Intelligence",
+    page_title="Expleo | BOM Intelligence",
     page_icon=tab_icon,
     layout="wide",
     initial_sidebar_state="collapsed",

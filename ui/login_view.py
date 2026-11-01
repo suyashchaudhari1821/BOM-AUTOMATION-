@@ -392,7 +392,7 @@ def render_login_page():
         <div style="display: flex; align-items: center; gap: 16px;">
             <img src="{logo_uri}" class="expleo-logo-img" alt="Expleo" />
             <span style="color: #64748B; font-size: 1.1rem;">|</span>
-            <span style="font-weight: 700; font-size: 0.95rem; color: #FFFFFF; letter-spacing: 0.02em;">Tooling BOM Intelligence</span>
+            <span style="font-weight: 700; font-size: 0.95rem; color: #FFFFFF; letter-spacing: 0.02em;">BOM Intelligence</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -432,7 +432,7 @@ def render_login_page():
 <div class="feat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6EC1E4" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
 <div>
 <div class="feat-text-title">Enterprise-Grade Reliability</div>
-<div class="feat-text-sub">Optimized for high-volume tooling files with zero data loss and deterministic outcomes.</div>
+<div class="feat-text-sub">Optimized for high-volume engineering files with zero data loss and deterministic outcomes.</div>
 </div>
 </div>
 </div>
@@ -442,7 +442,7 @@ def render_login_page():
     with col_right:
         st.markdown("""<div class="login-box">
 <div class="login-heading">Welcome Back</div>
-<div class="login-sub">Sign in with your Expleo credentials to access the tooling comparison workspace.</div>
+<div class="login-sub">Sign in with your Expleo credentials to access the BOM comparison workspace.</div>
 </div>""", unsafe_allow_html=True)
 
         with st.form("expleo_login_form", clear_on_submit=False):
