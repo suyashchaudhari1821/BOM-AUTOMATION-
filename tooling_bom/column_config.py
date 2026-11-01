@@ -44,7 +44,6 @@ COLUMN_ALIASES: dict[str, list[str]] = {
 # Tuple: (internal_key, english_display_name, french_display_name)
 CORE_TRACKED_COLUMNS: list[tuple[str, str, str]] = [
     ("NOPLAN",       "Drawing No.",               "No. Plan"),
-    ("NOPLANCHE",    "Sheet / Page No.",          "No. Planche"),
     ("DESIGN",       "French Description",        "Designation francaise"),
     ("DESIGN EN",    "English Description",       "Designation anglaise"),
     ("CONSTRUCTEUR", "Manufacturer",              "Constructeur"),
