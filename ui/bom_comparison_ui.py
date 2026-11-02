@@ -19,7 +19,7 @@ import traceback
 import pandas as pd
 import streamlit as st
 
-from tooling_bom.column_config import CORE_TRACKED_COLUMNS
+from tooling_bom.column_config import CORE_TRACKED_COLUMNS, get_column_display
 from tooling_bom.comparator import compare, rows_to_dataframe
 from tooling_bom.exporter import export_to_excel
 from tooling_bom.loader import load_bom
@@ -395,9 +395,16 @@ def _run_comparison(old_file, new_file) -> None:
 
         prog_bar.progress(65, text="[3/4] Evaluating Part Records & Detecting Attribute Deltas Across All Columns...")
         df_cols = set(old_result["df"].columns) | set(new_result["df"].columns)
+        # Predefined tracked columns in standard order
         columns_to_compare = [item for item in CORE_TRACKED_COLUMNS if item[0] in df_cols and item[0] != "REPERE"]
-        if not columns_to_compare:
-            columns_to_compare = CORE_TRACKED_COLUMNS
+        tracked_keys = {item[0] for item in columns_to_compare}
+
+        # Dynamically include ANY additional or custom columns present in either file
+        for col in sorted(df_cols):
+            if col != "REPERE" and col not in tracked_keys:
+                en_name, fr_name = get_column_display(col)
+                columns_to_compare.append((col, en_name, fr_name))
+
         results = compare(old_result["df"], new_result["df"], columns_to_compare)
 
         prog_bar.progress(90, text="[4/4] Generating Executive Excel Diff Report...")
