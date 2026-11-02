@@ -19,12 +19,7 @@ import traceback
 import pandas as pd
 import streamlit as st
 
-from tooling_bom.column_config import (
-    CORE_TRACKED_COLUMNS,
-    FULL_AUDIT_COLUMNS,
-    MACRO_NON_STANDARD_COLUMNS,
-    MACRO_STANDARD_COLUMNS,
-)
+from tooling_bom.column_config import CORE_TRACKED_COLUMNS
 from tooling_bom.comparator import compare, rows_to_dataframe
 from tooling_bom.exporter import export_to_excel
 from tooling_bom.loader import load_bom
@@ -117,7 +112,7 @@ def _render_topbar(user_name: str) -> None:
 def _render_upload_bar() -> None:
     st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
-    c1, c2, c3 = st.columns([4.5, 4.5, 3], gap="medium")
+    c1, c2, c3 = st.columns([5, 5, 2.5], gap="medium")
 
     with c1:
         st.markdown('<div class="file-card-label">Old / Reference BOM (.xlsx, .xlsm)</div>', unsafe_allow_html=True)
@@ -138,14 +133,7 @@ def _render_upload_bar() -> None:
             help="Revised BOM file to compare against",
         )
     with c3:
-        st.markdown("<div style='height:2px'></div>", unsafe_allow_html=True)
-        comparison_mode = st.radio(
-            "Comparison Mode",
-            options=["Macro Standard Mode", "Full Engineering Audit"],
-            index=0,
-            key="comparison_mode_radio",
-            help="Macro Standard Mode matches the official Excel VBA macro (6 core standard attributes + quantity for non-standard). Full Engineering Audit tracks all 23 attributes across both partitions.",
-        )
+        st.markdown("<div style='height:28px'></div>", unsafe_allow_html=True)
         both_uploaded = old_file is not None and new_file is not None
         run_clicked = st.button(
             "Run Comparison",
@@ -163,7 +151,7 @@ def _render_upload_bar() -> None:
     st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
 
     if run_clicked and both_uploaded:
-        _run_comparison(old_file, new_file, mode=comparison_mode)
+        _run_comparison(old_file, new_file)
 
 
 # ── Main Area ─────────────────────────────────────────────────────────────────
@@ -208,7 +196,7 @@ def _render_results(results: dict) -> None:
     export_bytes = results.get("export_bytes")
 
     # Download Bar
-    dl_col, mode_col, reset_col = st.columns([4, 5, 2.5])
+    dl_col, _, reset_col = st.columns([4, 5, 2.5])
     with dl_col:
         if export_bytes:
             st.download_button(
@@ -219,18 +207,6 @@ def _render_results(results: dict) -> None:
                 type="primary",
                 use_container_width=True,
             )
-    with mode_col:
-        mode_used = results.get("mode", "Macro Standard Mode")
-        st.markdown(
-            f"""
-            <div style="text-align: center; padding-top: 8px;">
-                <span style="background: rgba(128, 92, 229, 0.15); border: 1px solid rgba(128, 92, 229, 0.35); color: #C4B5FD; font-size: 0.82rem; font-weight: 600; padding: 6px 14px; border-radius: 9999px;">
-                    Scope: {mode_used}
-                </span>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
     with reset_col:
         if st.button("Start New Comparison", use_container_width=True, key="reset_btn"):
             for key in ["comparison_results", "comparison_error", "comparison_traceback"]:
@@ -402,7 +378,7 @@ def _render_table(rows: list[dict], partition: str) -> None:
 
 
 # ── Comparison Runner ─────────────────────────────────────────────────────────
-def _run_comparison(old_file, new_file, mode: str = "Macro Standard Mode") -> None:
+def _run_comparison(old_file, new_file) -> None:
     try:
         # Clear any leftover Streamlit cache to prevent stale data desync
         st.cache_data.clear()
@@ -417,16 +393,12 @@ def _run_comparison(old_file, new_file, mode: str = "Macro Standard Mode") -> No
         new_data = new_file.read()
         new_result = load_bom(io.BytesIO(new_data))
 
-        prog_bar.progress(65, text=f"[3/4] Evaluating Part Records & Detecting Deltas ({mode})...")
+        prog_bar.progress(65, text="[3/4] Evaluating Part Records & Detecting Attribute Deltas Across All Columns...")
         df_cols = set(old_result["df"].columns) | set(new_result["df"].columns)
-
-        if "Macro" in mode:
-            std_cols = [item for item in MACRO_STANDARD_COLUMNS if item[0] in df_cols]
-            nonstd_cols = [item for item in MACRO_NON_STANDARD_COLUMNS if item[0] in df_cols]
-            results = compare(old_result["df"], new_result["df"], std_cols, nonstd_cols)
-        else:
-            all_cols = [item for item in FULL_AUDIT_COLUMNS if item[0] in df_cols and item[0] != "REPERE"]
-            results = compare(old_result["df"], new_result["df"], all_cols, all_cols)
+        columns_to_compare = [item for item in CORE_TRACKED_COLUMNS if item[0] in df_cols and item[0] != "REPERE"]
+        if not columns_to_compare:
+            columns_to_compare = CORE_TRACKED_COLUMNS
+        results = compare(old_result["df"], new_result["df"], columns_to_compare)
 
         prog_bar.progress(90, text="[4/4] Generating Executive Excel Diff Report...")
         export_bytes = export_to_excel(
@@ -442,7 +414,6 @@ def _run_comparison(old_file, new_file, mode: str = "Macro Standard Mode") -> No
         results["old_filename"] = old_file.name
         results["new_filename"] = new_file.name
         results["export_bytes"] = export_bytes
-        results["mode"]         = mode
 
         st.session_state["comparison_results"] = results
         st.session_state.pop("comparison_error", None)
