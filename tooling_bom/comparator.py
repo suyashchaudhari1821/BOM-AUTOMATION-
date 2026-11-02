@@ -234,20 +234,14 @@ def _normalize(val: Any) -> str:
     """
     Normalize a value to a clean comparable string.
     - None / empty / "nan" -> ""
-    - Float integers (4.0) -> "4"
-    - Strips whitespace
+    - Keeps exact raw string value without number conversions
+    - Strips leading/trailing whitespace
     """
     if val is None:
         return ""
     s = str(val).strip()
     if s in ("", "None", "nan", "NaN", "NULL", "N/A"):
         return ""
-    try:
-        f = float(s.replace(",", "."))
-        if f == int(f):
-            return str(int(f))
-    except (ValueError, TypeError):
-        pass
     return s
 
 

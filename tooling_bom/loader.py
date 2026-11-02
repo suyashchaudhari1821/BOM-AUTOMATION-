@@ -295,7 +295,7 @@ def _normalize_repere(val: Any) -> str | None:
 
 def _normalize_value(val: Any) -> str:
     """
-    Normalize a cell value to a clean comparable string.
+    Normalize a cell value to a clean comparable string without converting numbers.
     Returns "" for blank/null/sentinel values.
     """
     if val is None:
@@ -303,11 +303,4 @@ def _normalize_value(val: Any) -> str:
     val_str = str(val).strip()
     if val_str in ("", "None", "nan", "NaN", "NULL", "N/A"):
         return ""
-    # Float like 4.0 -> "4"
-    try:
-        f = float(val_str.replace(",", "."))
-        if f == int(f):
-            return str(int(f))
-    except (ValueError, TypeError):
-        pass
     return val_str
