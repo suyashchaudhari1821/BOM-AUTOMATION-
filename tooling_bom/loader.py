@@ -241,12 +241,12 @@ def _build_column_map(
             en_raw = h_en[idx] if idx < len(h_en) else None
             if en_raw is None or str(en_raw).strip() == "" or isinstance(en_raw, (int, float)):
                 continue
-            raw_name = str(en_raw).strip()
+            raw_name = re.sub(r"\s+", " ", str(en_raw)).strip()
         else:
-            raw_name = str(raw_name).strip()
+            raw_name = re.sub(r"\s+", " ", str(raw_name)).strip()
 
         raw_columns.append(raw_name)
-        raw_upper = raw_name.upper().strip()
+        raw_upper = raw_name.upper()
         internal_key = alias_lookup.get(raw_upper, raw_name)  # fallback: use raw name as key
 
         # English display name

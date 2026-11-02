@@ -401,7 +401,7 @@ def _run_comparison(old_file, new_file) -> None:
 
         # Dynamically include ANY additional or custom columns present in either file
         for col in sorted(df_cols):
-            if col != "REPERE" and col not in tracked_keys:
+            if col and col != "REPERE" and col not in tracked_keys:
                 en_name, fr_name = get_column_display(col)
                 columns_to_compare.append((col, en_name, fr_name))
 
