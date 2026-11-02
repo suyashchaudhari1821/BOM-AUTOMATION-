@@ -20,7 +20,7 @@ from typing import Any
 import pandas as pd
 from python_calamine import CalamineWorkbook
 
-from tooling_bom.column_config import COLUMN_ALIASES, STANDARD_THRESHOLD
+from tooling_bom.column_config import COLUMN_ALIASES, STANDARD_THRESHOLD, get_column_display
 
 # ── Constants ──────────────────────────────────────────────────────────────────
 HEADER_SCAN_ROWS   = 35          # How many rows to scan for the header
@@ -28,6 +28,12 @@ REPERE_ANCHORS     = {"REPERE", "BALOON #", "BALLOON #", "NO. REPERE", "NO REPER
                       "ITEM NO", "ITEM NO.", "ITEM NUMBER", "ITEM #", "ITEM"}
 SECONDARY_ANCHORS  = {"CONSTRUCTEUR", "COEF", "CODEÍM", "CODEIM", "MABEC",
                       "MAKER", "MANUFACTURER", "QTY", "QUANTITY"}
+TECHNICAL_HEADER_ANCHORS = {
+    "REPERE", "NOPLAN", "NOPLANCHE", "DESIGN", "DESIGN EN",
+    "CONSTRUCTEUR", "REFCONST", "CODEIM", "CODE IM", "CODEÍM",
+    "MABEC", "COEF", "PR", "SOUSENS", "INDICE", "MATIERE",
+    "DIMENSIONS", "MASSE", "CATEGORIE", "FIXATION"
+}
 MIN_SECONDARY_HITS = 2           # Minimum secondary anchor matches to confirm header
 PREFERRED_SHEET    = "021"
 
@@ -173,19 +179,36 @@ def _detect_bom_sheets(wb: CalamineWorkbook, all_sheets: list[str]) -> list[str]
 
 def _find_header_row(rows: list[list[Any]], max_rows: int = HEADER_SCAN_ROWS) -> int | None:
     """
-    Scan rows to find the French/Technical header row.
+    Scan rows to find the authoritative French/Technical header row.
+    Scores candidate rows across the scan window to ensure the full technical header
+    (with REPERE, CodeIM, MABEC, etc.) is selected over any sparse subheader rows.
     Returns row index (0-based) or None if not found.
     """
+    best_row: int | None = None
+    best_score = -1
+
     for i, row in enumerate(rows[:max_rows]):
         row_upper = {str(c).strip().upper() for c in row if c is not None and str(c).strip()}
         # Must contain REPERE anchor
         if not row_upper.intersection(REPERE_ANCHORS):
             continue
-        # Must contain at least MIN_SECONDARY_HITS secondary anchors
+
+        tech_hits = row_upper.intersection(TECHNICAL_HEADER_ANCHORS)
         secondary_hits = row_upper.intersection(SECONDARY_ANCHORS)
-        if len(secondary_hits) >= MIN_SECONDARY_HITS:
-            return i
-    return None
+
+        if len(secondary_hits) < MIN_SECONDARY_HITS and len(tech_hits) < 2:
+            continue
+
+        # Score candidate: technical hits weighted heavily + exact REPERE bonus
+        score = len(tech_hits) * 2 + len(secondary_hits)
+        if "REPERE" in row_upper:
+            score += 15
+
+        if score > best_score:
+            best_score = score
+            best_row = i
+
+    return best_row
 
 
 def _build_column_map(
@@ -228,8 +251,15 @@ def _build_column_map(
 
         # English display name
         en_raw = h_en[idx] if idx < len(h_en) else None
-        en_name = str(en_raw).strip() if (en_raw and str(en_raw).strip()
-                                           and not isinstance(en_raw, (int, float))) else raw_name
+        if en_raw and str(en_raw).strip() and not isinstance(en_raw, (int, float)):
+            en_name = str(en_raw).strip()
+        else:
+            canonical_en, _ = get_column_display(internal_key)
+            en_name = canonical_en if canonical_en != internal_key else raw_name
+
+        # If en_name is generic 'description' for French designation column, make it clear
+        if internal_key == "DESIGN" and en_name.lower() in ("description", "design"):
+            en_name = "French Description"
 
         # Avoid duplicate key assignments
         if internal_key in seen_keys:

@@ -40,23 +40,26 @@ def compare(
     old_df: pd.DataFrame,
     new_df: pd.DataFrame,
     columns_to_compare: list[tuple[str, str, str]] | None = None,
+    nonstd_columns_to_compare: list[tuple[str, str, str]] | None = None,
 ) -> dict:
     """
     Compare two BOM DataFrames and return structured change results.
 
     Parameters
     ----------
-    old_df              : DataFrame from loader (must have 'REPERE' column)
-    new_df              : DataFrame from loader (must have 'REPERE' column)
-    columns_to_compare  : list of (internal_key, en_name, fr_name).
-                          If None, defaults to CORE_TRACKED_COLUMNS.
+    old_df                    : DataFrame from loader (must have 'REPERE' column)
+    new_df                    : DataFrame from loader (must have 'REPERE' column)
+    columns_to_compare        : list of (internal_key, en_name, fr_name) for Standard parts.
+                                If None, defaults to CORE_TRACKED_COLUMNS.
+    nonstd_columns_to_compare : list of (internal_key, en_name, fr_name) for Non-Standard parts.
+                                If None, defaults to columns_to_compare.
 
     Returns
     -------
     dict:
-        "standard"     : list[ChangeRow] — change rows for REPERE >= 4000
-        "non_standard" : list[ChangeRow] — change rows for REPERE < 4000
-        "summary"      : dict with computed counts (fully dynamic, nothing hardcoded)
+        "standard"          : list[ChangeRow] — change rows for REPERE >= 4000
+        "non_standard"      : list[ChangeRow] — change rows for REPERE < 4000
+        "summary"           : dict with computed counts (fully dynamic, nothing hardcoded)
         "old_count_std"     : int — total Standard parts in old BOM
         "new_count_std"     : int — total Standard parts in new BOM
         "old_count_nonstd"  : int — total Non-Standard parts in old BOM
@@ -64,6 +67,8 @@ def compare(
     """
     if columns_to_compare is None:
         columns_to_compare = CORE_TRACKED_COLUMNS
+    if nonstd_columns_to_compare is None:
+        nonstd_columns_to_compare = columns_to_compare
 
     # ── Build lookup dicts keyed by REPERE ────────────────────────────────────
     old_dict = _build_lookup(old_df)
@@ -75,7 +80,7 @@ def compare(
 
     # ── Run comparison for each partition ─────────────────────────────────────
     std_rows    = _compare_partition(old_std,    new_std,    PART_CATEGORY_STANDARD,     columns_to_compare)
-    nonstd_rows = _compare_partition(old_nonstd, new_nonstd, PART_CATEGORY_NON_STANDARD, columns_to_compare)
+    nonstd_rows = _compare_partition(old_nonstd, new_nonstd, PART_CATEGORY_NON_STANDARD, nonstd_columns_to_compare)
 
     # ── Compute summary counts (all dynamic from actual data) ─────────────────
     summary = _compute_summary(std_rows, nonstd_rows)

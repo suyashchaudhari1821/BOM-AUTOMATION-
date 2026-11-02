@@ -40,9 +40,23 @@ COLUMN_ALIASES: dict[str, list[str]] = {
     "NORME":        ["N° NORME", "N°NORME", "NORME", "Norme", "Standard Norm", "Standard No"],
 }
 
-# ── Core Tracked Columns ───────────────────────────────────────────────────────
-# Tuple: (internal_key, english_display_name, french_display_name)
-CORE_TRACKED_COLUMNS: list[tuple[str, str, str]] = [
+# ── Comparison Mode Presets ────────────────────────────────────────────────────
+# Preset 1: Macro Standard Mode (1:1 match with official Excel VBA Comparison Macro)
+MACRO_STANDARD_COLUMNS: list[tuple[str, str, str]] = [
+    ("CodeIM",       "IM Code",                   "Code IM"),
+    ("CONSTRUCTEUR", "Manufacturer",              "Constructeur"),
+    ("REFCONST",     "Manufacturer Part Number",  "Reference constructeur"),
+    ("MABEC",        "MABEC Code",                "Code MABEC"),
+    ("COEF",         "Quantity",                  "Quantite"),
+    ("DESIGN EN",    "English Description",       "Designation anglaise"),
+]
+
+MACRO_NON_STANDARD_COLUMNS: list[tuple[str, str, str]] = [
+    ("COEF",         "Quantity",                  "Quantite"),
+]
+
+# Preset 2: Full Engineering Audit Mode (compares all 23 available attributes across partitions)
+FULL_AUDIT_COLUMNS: list[tuple[str, str, str]] = [
     ("NOPLAN",       "Drawing No.",               "No. Plan"),
     ("DESIGN",       "French Description",        "Designation francaise"),
     ("DESIGN EN",    "English Description",       "Designation anglaise"),
@@ -68,8 +82,11 @@ CORE_TRACKED_COLUMNS: list[tuple[str, str, str]] = [
     ("NORME",        "Standard Norm",             "Norme"),
 ]
 
+# Core tracked columns default
+CORE_TRACKED_COLUMNS: list[tuple[str, str, str]] = FULL_AUDIT_COLUMNS
+
 # ── All Trackable Columns ─────────────────────────────────────────────────────
-ALL_TRACKABLE_COLUMNS: list[tuple[str, str, str]] = CORE_TRACKED_COLUMNS
+ALL_TRACKABLE_COLUMNS: list[tuple[str, str, str]] = FULL_AUDIT_COLUMNS
 
 # ── Bilingual Change Type Descriptions ─────────────────────────────────────────
 # Maps internal_key -> (english_change_type, french_change_type)
